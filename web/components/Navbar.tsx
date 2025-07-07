@@ -23,7 +23,7 @@ export default function Navbar() {
               <a href="/services" className="text-black hover:text-red-600 font-medium">Services</a>
               <a href="/about" className="text-black hover:text-red-600 font-medium">À propos</a>
               <a href="/contact" className="text-black hover:text-red-600 font-medium">Contact</a>
-              <a href="/contact" className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">Réserver</a>
+              <a href="/reservation" className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">Réserver</a>
             </div>
           </div>
 
