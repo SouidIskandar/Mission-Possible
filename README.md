@@ -1,4 +1,4 @@
-![Mission Possible TN ](./public/home.png){.align-right}
+![Mission Possible TN ](/home.png)
 
 # 🔧 Mission Possible TN
 
