@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronUp, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
@@ -36,7 +36,7 @@ export default function Navbar() {
 
           {/* Menu Desktop */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8">
+            <div className="ml-10 flex items-center space-x-6">
               <a href="/" className="text-black hover:text-red-600 font-medium">Accueil</a>
               <a href="/services" className="text-black hover:text-red-600 font-medium">Services</a>
               
@@ -98,12 +98,31 @@ export default function Navbar() {
 
               <a href="/about" className="text-black hover:text-red-600 font-medium">À propos</a>
               <a href="/contact" className="text-black hover:text-red-600 font-medium">Contact</a>
+              
+              {/* Bouton Espace Pro */}
+              <a 
+                href="/professionnel" 
+                className="flex items-center space-x-1 text-black hover:text-red-600 font-medium"
+              >
+                <User size={18} />
+                <span>Espace Pro</span>
+              </a>
+              
               <a href="/reservation" className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">Réserver</a>
             </div>
           </div>
 
           {/* Menu Mobile */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-4">
+            {/* Bouton Espace Pro (mobile) */}
+            <a 
+              href="/espace-pro" 
+              className="text-black hover:text-red-600"
+              onClick={() => setIsOpen(false)}
+            >
+              <User size={20} />
+            </a>
+            
             <button 
               onClick={() => setIsOpen(!isOpen)}
               className="text-black hover:text-red-600"
@@ -223,6 +242,17 @@ export default function Navbar() {
               >
                 Contact
               </a>
+              
+              {/* Bouton Espace Pro (mobile dropdown) */}
+              <a 
+                href="/espace-pro" 
+                className="flex items-center space-x-2 py-2 text-black hover:text-red-600"
+                onClick={() => setIsOpen(false)}
+              >
+                <User size={18} />
+                <span>Espace Pro</span>
+              </a>
+              
               <a 
                 href="/reservation" 
                 className="block mt-2 bg-red-600 text-white px-4 py-2 rounded-md text-center"
