@@ -1,6 +1,6 @@
 import { CalendarDays, Clock, User } from 'lucide-react';
 import SectionTitle from '@/components/ui/SectionTitle';
-
+import Image from 'next/image';
 export default function BlogPage() {
   const articles = [
     {
@@ -9,7 +9,7 @@ export default function BlogPage() {
       category: "Plomberie",
       date: "15 Nov 2023",
       readTime: "5 min",
-      image: "/images/blog/fuite-hiver.jpg"
+      image: "/images/blog/blog.jpg"
     },
     // Ajoutez 5-6 articles supplémentaires...
   ];
@@ -39,11 +39,13 @@ export default function BlogPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {articles.map((article, index) => (
               <article key={index} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
-                <div className="h-48 bg-gray-200 relative">
-                  {/* Image réelle à ajouter */}
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                    Image {index + 1}
-                  </div>
+                <div className="h-80 bg-gray-200 relative overflow-hidden">
+                  <Image
+                    src={article.image}
+                    alt={article.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-6">
                   <span className="inline-block bg-red-100 text-red-600 text-xs px-3 py-1 rounded-full mb-3">
