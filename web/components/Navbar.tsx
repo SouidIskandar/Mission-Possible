@@ -29,9 +29,9 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <span className="text-red-600 font-bold text-2xl tracking-wider">
+            <a href="/" className="text-red-600 font-bold text-2xl tracking-wider">
               MISSION <span className="text-black">POSSIBLE</span>
-            </span>
+            </a>
           </div>
 
           {/* Menu Desktop */}

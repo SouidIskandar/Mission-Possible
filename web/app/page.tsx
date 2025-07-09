@@ -7,6 +7,10 @@ import ARPreview from '@/components/ARPreview';
 import SmartDiagnostic from '@/components/SmartDiagnostic';
 import EcoCalculator from '@/components/EcoCalculator';
 import VoiceAssistant from '@/components/VoiceAssistant';
+import CoverageMap from '@/components/CoverageMap';
+import StatsSection from '@/components/StatsSection';
+import TrustBadges from '@/components/TrustBadges';
+import EmergencyBanner from '@/components/EmergencyBanner';
 
 export default function Home() {
   return (
@@ -15,12 +19,17 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ServicesGrid />
+        <EmergencyBanner />
+        <CoverageMap />
+        <StatsSection />
+        <TrustBadges />
         <LiveTracking />
         <ARPreview />
         <SmartDiagnostic />
         <EcoCalculator />
         <VoiceAssistant />
         <Testimonials />
+      
       </main>
     </div>
   );

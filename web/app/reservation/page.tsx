@@ -1,31 +1,60 @@
 // app/reservation/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Wrench, CheckCircle, ChevronLeft } from 'lucide-react';
-import SectionTitle from '@/components/ui/SectionTitle';
+import { Calendar, Clock, Wrench, CheckCircle, ChevronLeft, Droplet, Bolt, Sparkles, Leaf, Home } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 // Données des services disponibles
 const services = [
   {
     id: 'plomberie',
     name: 'Plomberie',
-    icon: <Wrench className="text-blue-500" />,
+    icon: <Droplet className="text-blue-500" />,
     description: 'Fuites, WC bouchés, installation sanitaire',
     duration: '1-3 heures'
   },
   {
     id: 'electricite',
     name: 'Électricité',
-    icon: <Wrench className="text-yellow-500" />,
+    icon: <Bolt className="text-yellow-500" />,
     description: 'Pannes, installations, tableau électrique',
     duration: '2-4 heures'
   },
-  // Ajoutez d'autres services...
+  {
+    id: 'nettoyage',
+    name: 'Nettoyage & Ménage',
+    icon: <Sparkles className="text-green-500" />,
+    description: 'Ménage régulier ou ponctuel',
+    duration: '2-5 heures'
+  },
+  {
+    id: 'jardinage',
+    name: 'Jardinage',
+    icon: <Leaf className="text-green-600" />,
+    description: 'Taille, tonte, élagage, débroussaillage',
+    duration: '2-6 heures'
+  },
+  {
+    id: 'bricolage',
+    name: 'Petits travaux',
+    icon: <Wrench className="text-red-500" />,
+    description: 'Montage meuble, étagères, réparations',
+    duration: '1-4 heures'
+  },
+  {
+    id: 'gardiennage',
+    name: 'Gardiennage',
+    icon: <Home className="text-purple-500" />,
+    description: 'Surveillance de propriété',
+    duration: 'Sur devis'
+  }
 ];
 
 export default function ReservationPage() {
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [selectedService, setSelectedService] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
@@ -45,6 +74,15 @@ export default function ReservationPage() {
     '15:00 - 17:00',
     '17:00 - 19:00'
   ];
+
+  // Vérifier si un service est passé en paramètre au chargement
+  useEffect(() => {
+    const serviceParam = searchParams.get('service');
+    if (serviceParam && services.some(s => s.id === serviceParam)) {
+      setSelectedService(serviceParam);
+      setStep(2); // Passer directement à l'étape de sélection de date
+    }
+  }, [searchParams]);
 
   const handleServiceSelect = (serviceId: string) => {
     setSelectedService(serviceId);
@@ -73,6 +111,17 @@ export default function ReservationPage() {
     setStep(5);
   };
 
+  // Générer les 7 prochains jours (pour l'étape 2)
+  const generateNextDays = () => {
+    const days = [];
+    for (let i = 1; i <= 7; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() + i);
+      days.push(date);
+    }
+    return days;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* En-tête */}
@@ -85,7 +134,7 @@ export default function ReservationPage() {
           >
             Réservation en ligne
           </motion.h1>
-          <p className="text-xl opacity-90">Réservez votre intervention en 3 étapes simples</p>
+          <p className="text-xl opacity-90">Réservez votre intervention en quelques clics</p>
         </div>
       </section>
 
@@ -137,6 +186,7 @@ export default function ReservationPage() {
                       <div>
                         <h3 className="font-bold">{service.name}</h3>
                         <p className="text-sm text-gray-600">{service.description}</p>
+                        <p className="text-xs text-gray-500 mt-1">Durée: {service.duration}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -168,10 +218,7 @@ export default function ReservationPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Générer 7 prochains jours */}
-                {[...Array(7)].map((_, i) => {
-                  const date = new Date();
-                  date.setDate(date.getDate() + i + 1);
+                {generateNextDays().map((date) => {
                   const dateStr = date.toLocaleDateString('fr-FR', {
                     weekday: 'short',
                     day: 'numeric',
@@ -343,23 +390,31 @@ export default function ReservationPage() {
                 </div>
               </div>
 
-              <button
-                onClick={() => {
-                  setStep(1);
-                  setSelectedService('');
-                  setSelectedDate('');
-                  setSelectedTime('');
-                  setFormData({
-                    name: '',
-                    phone: '',
-                    address: '',
-                    details: ''
-                  });
-                }}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-              >
-                Nouvelle réservation
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/services"
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg transition-colors"
+                >
+                  Voir nos services
+                </Link>
+                <button
+                  onClick={() => {
+                    setStep(1);
+                    setSelectedService('');
+                    setSelectedDate('');
+                    setSelectedTime('');
+                    setFormData({
+                      name: '',
+                      phone: '',
+                      address: '',
+                      details: ''
+                    });
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+                >
+                  Nouvelle réservation
+                </button>
+              </div>
             </motion.div>
           )}
         </div>
